@@ -1,0 +1,181 @@
+/* for example sake */
+
+.wrap {
+  margin-top: 100px;
+  margin-left:220px;
+}
+
+/* search box stuff */
+.slack-search {
+  height: 33px;
+  width: 100%;
+  position: relative;
+}
+
+.slack-search input.main-input {
+  height: 30px;
+  width: 100%;
+  font-size: 18px;
+  overflow: hidden;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  z-index: 2;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  position: relative;
+  font-family: Arial, sans-serif;
+  direction: ltr;
+  margin-left:8px;
+  padding-left: 5px;
+}
+.slack-search .background-container {
+  color: transparent;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30px;
+  z-index: 1;
+  outline: #555459 none 0px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  margin: 3px 8px 0 8px;
+  white-space: pre;
+  overflow: hidden;
+  padding-left: 5px;
+}
+.slack-search .background-container .hint-value {
+  color: #ccc;
+}
+.slack-search .background-container .token.modifier, .slack-search .hint-menu.with-help .modifier {
+  position: relative;
+  z-index: 10;
+}
+
+/*
+.slack-search .background-container .token {
+  position: relative;
+  z-index:10;
+} */
+
+.slack-search .background-container .token.modifier.incomplete:before, .slack-search .hint-menu.with-help .modifier.incomplete:before {
+  right: 0;
+  border-color: #FFDCB1;
+  background: #ffebaa;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ffebaa), color-stop(1, #fff9dc));
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.slack-search .background-container .modifier:before, .slack-search .hint-menu.with-help .modifier:before {
+  content: ' ';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  z-index: -1;
+  right: -1px;
+  bottom: 0;
+  display: block;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-width: 1px;
+  height: 28px;
+  border-style: solid;
+  border-color: #8CD5B7;
+  background: #E5F4EE;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccecdf), color-stop(1, #e9f6f1));
+}
+.slack-search .hint-menu.with-help .modifier {
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* popover customizations */
+
+.popover-content {
+  padding:0 !important;
+}
+.popover.bottom .arrow {
+    left:5% !important;
+}
+.popover.bottom {
+    left:2% !important;
+}
+.popover {
+  width: 400px;
+  max-width: 600px;
+  max-height: 400px;
+}
+
+.search-meta {
+  margin-bottom: 10px;
+  background: #f5f5f5;
+  height: 40px;
+}
+.search-meta span {
+  padding-left: 5px;
+}
+
+/* autocompletebox styles */
+.autocompletebox .header {
+  margin: 10px;
+}
+.autocompletebox .content {
+  margin: 10px;
+}
+.enter-key {
+  border: 1px solid;
+  padding-left: 3px;
+  padding-right: 3px;
+  /* border-color: #f5f5f5; */
+  font-color: #f5f5f5;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+.modifier-header {
+  margin-bottom: 5px;
+  text-align: left;
+/*
+  border-bottom: 1px solid #000;
+  line-height: 0.2em;
+  margin: 10px 0 20px;
+*/
+}
+
+.modifier-header .header-content {
+ /* background: #fff;
+  padding-right: 10px;
+*/
+  display:inline-block;
+}
+
+.header-content:after {
+    border-top: 1px solid black;
+    display: block;
+    height: 5px;
+    content: " ";
+    width: 40%;
+    position: absolute;
+    top: 1.2em;
+    right: 0;  
+    left: auto; 
+}
+
+.modifier hr {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.suggestion:hover {
+  background: #f5f5f5;
+}
+
+.suggestion.hovered {
+  background: #f5f5f5;
+}
+

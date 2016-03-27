@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="taggify.css">
+
+<script type="text/javascript" src="jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="tagmode.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+  
+  $("#searchDropdownBox").change(function(){
+    var Search_Str = $(this).val();
+    //replace search str in span value
+    $("#nav-search-in-content").text(Search_Str);
+  });
+
+  var options = {}
+  $("#searchbox").taggify({});
+});
+</script>
+
+<body>
+
+<div class="container">
+  <div class="wrap">
+  <div class="row">
+  <div class="col-lg-8">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Branch<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#">master</a></li>
+          <li><a href="#">4.6</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">ncc</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <div class="slack-search">
+      <input id="searchbox" type="text" class="form-control main-input" aria-label="...">
+      <div class="background-container">
+        <span class="modifier"></span>
+        <span class="hint-value"></span>
+      </div> <!-- background container -->
+    </div> <!-- slack search -->
+    </div><!-- /input-group -->
+    </div> <!-- col-lg-6 -->
+  </div> <!-- row -->
+  </div> <!-- wrap -->
+</div> <!-- container fluid -->
+</body>
