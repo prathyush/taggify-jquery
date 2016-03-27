@@ -36,14 +36,16 @@
 
   var modifier_help_key = '+';
 
+  var modifier_helper_message = '';
+
   var modifiers = {'in:' : 'any component', 'function:': 'any function',
   'function_call:': 'any function'};
 
   // TODO: Look at sifter.
 
   var items = {
-    'in': ['stargate', 'cerebro', 'ncc'],
-    'function' : ['get_host_version', 'StartCerebro'],
+    'in': ['kernel', 'filesystems', 'drivers'],
+    'function' : ['get_host_version', 'dummy_function'],
     'function_call' : ['same_stuff'],
   }
 
@@ -67,7 +69,6 @@
       <div class="content">Narrow your search with the following tags: in: => component, <definition type>: => definition</div>`;
 
     var popover_options = {
-     // title : 'Assisted Search',
       trigger: 'click focus',
       placement: 'bottom',
       html: 'true',
@@ -99,6 +100,90 @@
         debug(e);
         var inputbox = $(this);
         var show_default_message = false;
+
+        /* Helper functions */
+        var update_popover = function(message) {
+          // TODO: This shouldn't be reloading the popover!. Dynamically load the
+          // divs!.
+          //var popover = inputbox.attr('data-content', message).data('bs.popover');
+          //popover.setContent();
+          inputbox.popover('show');
+          $('.autocompletebox').html(message);
+          return;
+        };
+
+        var update_query = function(query) {
+          $('.autocompletebox .header .query').html('"'+query+'"');
+        };
+      
+        var update_suggestions = function(suggestions) {
+          debug(suggestions);
+          // From AJAX.
+        };
+
+        /*
+         tokens = {
+            token : {
+              modifier : "in:cerebro",
+              text : "",
+              hint-value: ""
+            }
+         }
+         */
+        var update_searchbox = function(token) {
+          var input_val;
+          var background_val;
+          var hint_value_text;
+          var hint_value = $('.background-container .hint-value');
+          hint_value.text(' ');
+          var token_classes;
+
+          // Build up hint-value based on first suggestion
+          var first_suggestion = $('div.suggestion').first();
+
+          // For a space in the end or when a valid token is sent across
+          // - we have to remove the incomplete class and move on.
+          // So, if a span as token and modifier, we don't touch it.
+
+          // Handle spaces.
+          if (token == undefined) {
+            var tokens = inputbox.val().split(' ');
+            token = tokens[tokens.length - 1]
+            if (token == "") {
+              debug('oh a space')
+              //TODO: Need to ease the spaces through.
+              token = tokens[tokens.length - 2]
+            }
+          }
+
+          if (token == undefined) {
+            return;
+          }
+          debug('searchbox '+token)
+          debug(modifiers)
+          if (token in modifiers) {
+            debug('got a modifier')
+            token_classes = "modifier incomplete token";
+            //inputbox.val(token_replace(inputbox.val(), token));
+            hint_value_text = modifiers[token]
+          }
+
+          if ($('.background-container .token').length == 0) {
+            debug('first token of the day')
+            // Insert background_val before hint_value.
+            $('.background-container .hint-value').
+              before('<span class="token">'+token+'</span>')
+          } else {
+            // Update the last token.
+            debug('updating the last token <'+token+'>')
+            var last_token = $('.background-container .token').last();
+            last_token.text(token);
+            last_token.removeClass('modifier incomplete');
+            last_token.addClass(token_classes);
+            hint_value.text(hint_value_text);
+            inputbox.val(token_replace(inputbox.val(), token));
+          }
+        };
 
         switch(e.keyCode) {
           case KEY_TAB:
@@ -159,86 +244,6 @@
             break;
         }
 
-        var update_popover = function(message) {
-          // TODO: This shouldn't be reloading the popover!. Dynamically load the
-          // divs!.
-          //var popover = inputbox.attr('data-content', message).data('bs.popover');
-          //popover.setContent();
-          inputbox.popover('show');
-          $('.autocompletebox').html(message);
-          return;
-        };
-
-        var update_query = function(query) {
-          $('.autocompletebox .header .query').html('"'+query+'"');
-        };
-      
-        var update_suggestions = function(suggestions) {
-          debug(suggestions);
-          // From AJAX.
-        };
-
-        /*
-         tokens = {
-            token : {
-              modifier : "in:cerebro",
-              text : "",
-              hint-value: ""
-            }
-         }
-         */
-        var update_searchbox = function(token) {
-          var input_val;
-          var background_val;
-          var hint_value_text;
-          var hint_value = $('.background-container .hint-value');
-          hint_value.text(' ');
-          var token_classes;
-
-          // Build up hint-value based on first suggestion
-          var first_suggestion = $('div.suggestion').first();
-
-          // For a space in the end or when a valid token is sent across
-          // - we have to remove the incomplete class and move on.
-          // So, if a span as token and modifier, we don't touch it.
-
-          // Handle spaces.
-          if (token == undefined) {
-            var tokens = inputbox.val().split(' ');
-            token = tokens[tokens.length - 1]
-            if (token == "") {
-              debug('oh a space')
-              //TODO: Need to ease the spaces through.
-              token = tokens[tokens.length - 2]
-            }
-          }
-
-          debug('searchbox '+token)
-          debug(modifiers)
-          if (token in modifiers) {
-            debug('got a modifier')
-            token_classes = "modifier incomplete token";
-            //inputbox.val(token_replace(inputbox.val(), token));
-            hint_value_text = modifiers[token]
-          }
-
-          if ($('.background-container .token').length == 0) {
-            debug('first token of the day')
-            // Insert background_val before hint_value.
-            $('.background-container .hint-value').
-              before('<span class="token">'+token+'</span>')
-          } else {
-            // Update the last token.
-            debug('updating the last token <'+token+'>')
-            var last_token = $('.background-container .token').last();
-            last_token.text(token);
-            last_token.removeClass('modifier incomplete');
-            last_token.addClass(token_classes);
-            hint_value.text(hint_value_text);
-            inputbox.val(token_replace(inputbox.val(), token));
-          }
-        };
-
         var update_results = false;
         if (show_default_message == true) {
           debug('showing default message')
@@ -265,6 +270,8 @@
             update_results = true;
           } */
         }
+
+
 
         if (update_results == true) {
           debug('update_results is true')
